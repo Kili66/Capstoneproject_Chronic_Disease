@@ -3,7 +3,8 @@ import streamlit as st
 import streamlit_option_menu
 from streamlit_option_menu import option_menu 
 import numpy as np
-
+import pandas as pd 
+import matplotlib.pyplot as plt
 
 #load the models
 
@@ -21,7 +22,8 @@ with st.sidebar:
                           ], icons=['activity','heart-pulse','person'], default_index= 0)
 ### Diabetes Disease-----------------------------------------------
 if selected=='Diabetes Disease Prediction':
-    st.title('Diabetes Disease Prediction') # page title
+    st.title(':medical_symbol: Diabetes Disease Prediction') # page title
+    st.subheader('Please Read the Medical describtion below before entering the values :exclamation:')
     # User inputs
     col1, col2, col3=st.columns(3)
     
@@ -75,16 +77,30 @@ if selected=='Diabetes Disease Prediction':
             diab_diagnosis = "Prediction error"
 
     st.success(diab_diagnosis)
+    #st.plotly_chart(features)
+    st.header('Attention! Please follow the values given in the range') 
+    st.markdown("""
+        * **Pregnancies**: Number of times pregnant, range: [0-17]
+        * **Glucose**: Plasma glucose concentration a 2 hours in an oral glucose tolerance test, range: [30.46-199]
+        * **BloodPressure**: Diastolic blood pressure (mm Hg), range: [24-122]
+        * **SkinThickness**: Triceps skin fold thickness (mm), range: [7-99]
+        * **Insulin**: 2-Hour serum insulin (mu U/ml), range: [89.10-846]
+        * **BMI**: Body mass index (weight in kg/(height in m)^2), range: [18, 67]
+        * **DiabetesPedigreeFunction**: Diabetes pedigree function. The range value is [0-2.5]
+        * **Age**: Age (years)
+        
+""")
 ### Heart Disease-----------------------------------------
 if selected=='Heart Disease Prediction':
-    st.title("Heart Disease Prediction ") #page TiTLE
+    st.title(":heartpulse: Heart Disease Prediction ") #page TiTLE
+    st.subheader("Please read the Medical descriptions below before entering the values :exclamation:")
     #user inputs
     col1, col2, col3=st.columns(3)
     #age	sex	cp	trestbps	chol	fbs	restecg	thalach	exang	oldpeak	slope	ca	thal
     with col1:
         age= st.text_input("Age of the person")
     with col2:
-        sex=  st.text_input("sex")
+        sex=  st.text_input("sex: 0 or 1?")
     with col3:
         cp= st.text_input("cheast pain value")
     with col1:
@@ -92,7 +108,7 @@ if selected=='Heart Disease Prediction':
     with col2:
         chol=st.text_input("serum cholestoral in mg/dl value")
     with col3:
-        fbs= st.text_input("fasting blood sugar > 120 mg/dl of Patient")
+        fbs= st.text_input("fasting blood sugar")
     with col1:
         restecg= st.text_input("resting electrocardiographic results (0,1,2)")
     with col2:
@@ -100,13 +116,13 @@ if selected=='Heart Disease Prediction':
     with col3:
         exang= st.text_input("exercise induced angina value")
     with col1:
-        oldpeak= st.text_input("Enter the oldpeak = ST depression induced by exercise relative to rest")
+        oldpeak= st.text_input("Enter the oldpeak ")
     with col2:
-        slope= st.text_input("Enter the slope of the peak exercise ST segment")
+        slope= st.text_input("Enter the slope of the peak exercise ")
     with col3:
-        ca= st.text_input("number of major vessels (0-3) colored by flourosopy")
+        ca= st.text_input("number of major vessels (0-3)")
     with col1:
-        thal= st.text_input("thal: 0 = normal; 1 = fixed defect; 2 = reversable defect")
+        thal= st.text_input("thal: 0, 1 or 2")
     heart_diagnosis=' '
     if st.button("Heart Disease Test result"):
         
@@ -129,11 +145,31 @@ if selected=='Heart Disease Prediction':
             heart_diagnosis = "Prediction error"
 
     st.success(heart_diagnosis)
+    st.header('Attention! Follow the values given in the range please!') 
+    st.markdown("""
+        * **Age**
+        * **Sex**: 0 represents Male and 1 represents Female
+        * **Chest pain type**: [0-1-2-3]
+        * **Resting blood pressure**: range[94-200]
+        * **Serum cholestoral** : in mg/dl, range: [126-564]
+        * **Fasting blood sugar** > 120 mg/dl Normal: 99 milligrams per deciliter (mg/dL) or lower,
+            Prediabetes: 100 to 125 mg/dL,
+            Diabetes: 126 mg/dL or higher.
+            These levels represent the amount of sugar in your blood after fasting (typically not eating for at least 8 hours).
+        * **Resting electrocardiographic results** (values 0,1,2)
+        * **Maximum heart rate achieved:**: range[71-202]
+        * **Exercise induced angina**: Binary value, range: 0 or 1
+        * **Oldpeak** = Depression induced by exercise relative to rest, range: [0-6.2]
+        * **The slope of the peak exercise ST segment**: range: [0-1-2]
+        * **Number of major vessels** range: [0-3] colored by flourosopy
+        * **Thal**: 0 = normal; 1 = fixed defect; 2 = reversable defect
+""")
         
         
 ## Parkinson---------------------------------------------     
 if selected=='Parkinson Disease Prediction':
-    st.title("Parkinson Disease Prediction ") #PAGE TILE
+    st.title(":person_frowning: Parkinson Disease Prediction ") #PAGE TILE
+    st.subheader("Please read the Medical descriptions below before entering the values :exclamation:")
     col1, col2, col3, col4, col5=st.columns(5)
     #MDVP:Fo(Hz)         0
         # MDVP:Fhi(Hz)        0
@@ -225,3 +261,20 @@ if selected=='Parkinson Disease Prediction':
             park_diagnosis = "Prediction error"
 
     st.success(park_diagnosis)
+    #-----------------------------------------
+  
+    st.markdown("""
+        
+        * **MDVP:Fo(Hz)** - Average vocal fundamental frequency. range: [88.33-260.10]
+        * **MDVP:Fhi(Hz)** - Maximum vocal fundamental frequency. range: [103-593]
+        * **MDVP:Flo(Hz)** - Minimum vocal fundamental frequency. range: [65.5-240]
+        * **MDVP:Jitter(%), MDVP:Jitter(Abs), MDVP:RAP, MDVP:PPQ, Jitter:DDP** - Several measures of variation in fundamental frequency. range: [0.002-0.05]
+        * **MDVP:Shimmer,MDVP:Shimmer(dB),Shimmer:APQ3,Shimmer:APQ5,MDVP:APQ,Shimmer:DDA** - Several measures of variation in amplitude. range: [0.000007-0.000260]
+        * **HNR**: Harmonics-to-Noise Ratio. The range  could be between 10 and 30 or higher
+        * **NHR** - Noise-to-Harmonics Ratio. range: [0-0.5]
+        * **Status** - The health status of the subject (one) - Parkinson's, (zero) - healthy. range: [0.001-1.5]
+        * **RPDE, D2** - Two nonlinear dynamical complexity measures. The range is typically between 0 and 1.
+        * **DFA** - Signal fractal scaling exponent. range: [0-2]
+        * **Spread1, Spread2** -  Nonlinear measures of fundamental frequency variation. range:[ -10 to 10.]
+        * **PPE**:-Nonlinear Measure of Fundamental Frequency Variation.The range for PPE can vary and might be between 0 and 1.
+""")
